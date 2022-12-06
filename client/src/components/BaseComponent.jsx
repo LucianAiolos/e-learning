@@ -3,6 +3,7 @@ import { Container } from "react-bootstrap";
 import { SearchCourse } from "./SearchCourse";
 import { Courses  } from "./Courses";
 import data from "../Data/courses.json";
+import api from "../api/api";
 
 export const BaseComponent = () => {
   const [state, setState] = useState({
@@ -16,6 +17,7 @@ export const BaseComponent = () => {
       setState((prevState) => {
               return { ...prevState, courses:  data, loaded: true };
           });
+      fetchData()
   }, []);
 
   const handleSearchStringUpdate = (searchString) => {
@@ -23,6 +25,28 @@ export const BaseComponent = () => {
           return { ...prevState, search_string: searchString };
       });
   };
+
+  const fetchData = async () => {
+    try {
+        const res = await api.get('/loadAllCourses'); 
+        console.log(res.data);
+        if (res.data.length > 0) {
+            setState((prevState) => {
+                return { ...prevState, courses: res.data, loaded: true };
+            });
+        } 
+        else
+            setState((prevState) => {
+            return { ...prevState, loaded: true };
+        });
+    } 
+    catch (error) {
+        console.log("Error : " + error);
+        setState((prevState) => {
+            return { ...prevState, loaded: true };
+        });
+    }        
+}
 
   return (
       <Container>

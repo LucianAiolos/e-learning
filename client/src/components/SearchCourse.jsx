@@ -18,7 +18,7 @@ export const SearchCourse = ({ searchStringUpdated }) => {
                     onChange={submitSearchString}
                 />
             </Col>
-            <Col xs={1}>
+            <Col md={1}>
                 <Button variant="primary" type="submit">
                     <BsSearch />
                 </Button>

@@ -7,7 +7,7 @@ export const Course = ({course}) => {
           <Col xs={2} className={"m-2 me-1"}>
               <div>
                   <Image
-                  style={{ width: "100%", height: "100%" }}
+                  style={{ width: "50%", height: "50%" }}
                   src={course.img}
                   alt="Image could not load"
                   ></Image>
