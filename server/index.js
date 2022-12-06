@@ -3,15 +3,16 @@ const cors = require('cors')
 require('dotenv').config()
 const mongoose = require('mongoose')
 const { mongo } = require('mongodb')
-const courseroutes = require('./routes/routes')
+const router = require('./routes/routes')
 
-console.log(process.env.MONGO_URI)
-const app = express()
-app.use(cors())
-app.use(courseroutes)
-const PORT = 3333
+console.log(router)
+
 const mongoDB = process.env.MONGO_URI
-console.log(mongoDB, 'mongo string')
+console.log(process.env.MONGO_URI)
+
+const app = express()
+
+const PORT = 3333
 
 mongoose.connect(mongoDB, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => {
@@ -19,5 +20,7 @@ mongoose.connect(mongoDB, { useNewUrlParser: true, useUnifiedTopology: true })
   })
   .catch((err) => console.log(err))
 
+app.use(cors())
+app.use(router)
 
 app.listen(PORT, ()=> console.log('listening on ', PORT))

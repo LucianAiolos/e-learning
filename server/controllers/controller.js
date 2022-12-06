@@ -1,11 +1,19 @@
 const CourseModel = require('../models/model')
+const data = require('../data/courses.json')
+
+const insertCourses = async () => {
+  await CourseModel.insertMany(data, (err, elem) => {
+    if(!err) { console.log('Course Inserted Successfully with elements\n:' + elem) }
+    else { console.log("Error while Inserting Course " + err) }
+  })
+}
 
 module.exports.loadAllCourses = async ( req, res ) => {
   try {
     insertCourses()
     results = await CourseModel.find()
     res.header('Access-Control-Allow-Origin', '*')
-    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-Width, Content-Type, Accept')
+    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept')
     res.json(results)
   }
   catch(err) {
@@ -13,9 +21,3 @@ module.exports.loadAllCourses = async ( req, res ) => {
   }
 }
 
-const insertCourses = async () => {
-  await CourseModel.insertMany(data, (err, elem) => {
-    if(!err) console.log('Course Inserted Successfully with elements\n:' + elem)
-    else console.log("Error while Inserting Course " + err)
-  })
-}
